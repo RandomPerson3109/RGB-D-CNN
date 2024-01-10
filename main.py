@@ -54,7 +54,7 @@ test_dataset = YourCustomDataset(test_data_path, transform=test_transforms)
 test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
 # 3. GoogLeNet Model
-model = torch.hub.load('pytorch/vision:v0.10.0', 'googlenet', pretrained=False)
+model = torch.hub.load('CSAILVision/places365', 'googlenet', pretrained=True)
 # Modify GoogLeNet if needed (e.g., change the number of classes in the final fully connected layer)
 
 # 4. Training
