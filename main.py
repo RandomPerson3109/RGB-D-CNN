@@ -1,11 +1,11 @@
-from torchvision import transforms
+import os
+
 import torch
 import torch.nn as nn
-from torchvision import datasets, transforms
-from torch.utils.data import Dataset, DataLoader
 from PIL import Image
-import numpy as np
-import os
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
+
 
 class YourCustomDataset(Dataset):
     def __init__(self, data_folder, transform=None):
@@ -47,22 +47,22 @@ test_transforms = transforms.Compose([
 # Define your custom dataset class and preprocessing steps
 
 # 2. Data Loading
-train_dataset = YourCustomDataset(train_data_path, transform=train_transforms)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+train_dataset = YourCustomDataset("C:/Users/최신우/PycharmProjects/CNN/Train", transform=train_transforms)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
-test_dataset = YourCustomDataset(test_data_path, transform=test_transforms)
-test_loader = DataLoader(test_dataset, batch_size=batch_size)
+test_dataset = YourCustomDataset("C:/Users/최신우/PycharmProjects/CNN/Test", transform=test_transforms)
+test_loader = DataLoader(test_dataset, batch_size=32)
 
 # 3. GoogLeNet Model
-model = torch.hub.load('CSAILVision/places365', 'googlenet', pretrained=True)
+model = torch.hub.load('pytorch/vision:v0.10.0', 'googlenet', weights=None)
 # Modify GoogLeNet if needed (e.g., change the number of classes in the final fully connected layer)
 
 # 4. Training
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 # Training loop
-for epoch in range(num_epochs):
+for epoch in range(10):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
         optimizer.zero_grad()
